@@ -21,7 +21,7 @@ h2{font:34px Georgia,serif}.grid{display:grid;grid-template-columns:repeat(6,1fr
 .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;background:white;text-align:center}.benefits div{padding:18px}.banners{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.banner{padding:35px;background:#ead0c9;border-radius:12px;min-height:150px}.banner h3{font:25px Georgia,serif}
 footer{background:#191514;color:white;padding:45px 7%;display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px}footer h3{font-family:Georgia,serif}.cart{position:fixed;right:20px;bottom:20px;background:#191514;color:white;border-radius:50px;padding:14px 20px;box-shadow:0 4px 15px #0003}
 @media(max-width:900px){header{flex-wrap:wrap}.logo{order:-1;width:100%;text-align:center}.grid{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(3,1fr)}.benefits{grid-template-columns:repeat(2,1fr)}.banners{grid-template-columns:1fr}.hero h1{font-size:40px}footer{grid-template-columns:1fr}}
-</style>
+.cart{cursor:pointer}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:center;justify-content:center;padding:20px}.modal-box{background:#fffaf7;width:min(500px,100%);max-height:90vh;overflow:auto;border-radius:18px;padding:24px;position:relative}.modal-box h2{margin-top:0}.close{position:absolute;right:15px;top:12px;border:0;background:none;font-size:25px;cursor:pointer}.order-list{background:#fff;padding:12px;border-radius:10px;margin:12px 0}.field{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:9px;font-size:15px}.send{width:100%;border:0;background:#25D366;color:#fff;padding:14px;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}.empty{color:#777;text-align:center}</style>
 </head>
 <body>
 <div class="top"><span>🚚 Livraison partout au Maroc</span><span>💳 Paiement à la livraison</span><span>♡ Votre beauté, notre priorité</span></div>
@@ -38,7 +38,21 @@ footer{background:#191514;color:white;padding:45px 7%;display:grid;grid-template
 <section class="benefits"><div>🚚<b> Livraison rapide</b><br>Partout au Maroc</div><div>🛡️<b> Paiement à la livraison</b><br>Sûr et pratique</div><div>🎁<b> Emballage soigné</b><br>Avec amour ♡</div><div>🎧<b> Service client</b><br>À votre écoute</div></section>
 <section class="banners" id="promos"><div class="banner"><h3>Accessoires & pinceaux</h3><p>Les essentiels pour un maquillage parfait.</p></div><div class="banner"><h3>Promotions jusqu'à -50%</h3><p>Sur une sélection de produits.</p></div><div class="banner"><h3>Livraison partout au Maroc</h3><p>Rapide · Sécurisée · Suivie</p></div></section>
 <footer id="contact"><div><h3>☾ LUNE BEAUTY</h3><p>La beauté à portée de main ♡</p></div><div><h3>Liens utiles</h3><p>Accueil<br>Nouveautés<br>Maquillage<br>Best-sellers<br>Promotions</p></div><div><h3>Contact</h3><p>WhatsApp<br>Instagram · TikTok<br>Service client</p></div></footer>
-<div class="cart">🛒 Panier (<span id="count">0</span>)</div>
+<div class="cart" onclick="openCart()">🛒 Panier (<span id="count">0</span>)</div>
+<div class="modal" id="cartModal">
+  <div class="modal-box">
+    <button class="close" onclick="closeCart()">×</button>
+    <h2>Votre panier 🛍️</h2>
+    <div class="order-list" id="orderList"><div class="empty">Votre panier est vide.</div></div>
+    <form onsubmit="sendOrder(event)">
+      <input class="field" id="customerName" placeholder="Nom et prénom" required>
+      <input class="field" id="customerPhone" type="tel" placeholder="Téléphone" required>
+      <input class="field" id="customerCity" placeholder="Ville" required>
+      <textarea class="field" id="customerAddress" placeholder="Adresse de livraison" rows="3" required></textarea>
+      <button class="send" type="submit">📲 Commander sur WhatsApp</button>
+    </form>
+  </div>
+</div>
 <script>
 
 const products = [
@@ -52,6 +66,7 @@ const products = [
 
 ];
 
+let cartItems = [];
 let count = 0;
 
 const grid = document.getElementById("grid");
@@ -68,7 +83,7 @@ function render(list = products) {
 
       <div class="price">${p[1]}</div>
 
-      <button class="add" onclick="add()">Ajouter au panier</button>
+      <button class="add" onclick="add('${p[0]}', '${p[1]}')">Ajouter au panier</button>
 
     </div>
 
@@ -76,11 +91,29 @@ function render(list = products) {
 
 }
 
-function add() {
-
-  count++;
-
+function add(name, price) {
+  cartItems.push({name, price});
+  count = cartItems.length;
   document.getElementById("count").textContent = count;
+  alert(name + " ajouté au panier ♡");
+}
+function openCart(){
+  document.getElementById("cartModal").style.display="flex";
+  const list=document.getElementById("orderList");
+  if(!cartItems.length){list.innerHTML='<div class="empty">Votre panier est vide.</div>';return;}
+  list.innerHTML=cartItems.map((x,i)=>`<div style="display:flex;justify-content:space-between;margin:7px 0"><span>${i+1}. ${x.name}</span><b>${x.price}</b></div>`).join('');
+}
+function closeCart(){document.getElementById("cartModal").style.display="none";}
+function sendOrder(e){
+  e.preventDefault();
+  if(!cartItems.length){alert("Ajoutez au moins un produit au panier.");return;}
+  const name=document.getElementById("customerName").value;
+  const phone=document.getElementById("customerPhone").value;
+  const city=document.getElementById("customerCity").value;
+  const address=document.getElementById("customerAddress").value;
+  const items=cartItems.map(x=>`- ${x.name} (${x.price})`).join('%0A');
+  const text=`Bonjour Lune Beauty 🌸%0AJe souhaite passer une commande :%0A${items}%0A%0ANom : ${encodeURIComponent(name)}%0ATéléphone : ${encodeURIComponent(phone)}%0AVille : ${encodeURIComponent(city)}%0AAdresse : ${encodeURIComponent(address)}%0A%0APaiement à la livraison.`;
+  window.open(`https://wa.me/212618442000?text=${text}`, '_blank');
 }
 
 function filterProducts(q) {

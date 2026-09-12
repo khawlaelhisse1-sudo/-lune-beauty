@@ -17,7 +17,7 @@ nav{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}nav a{text-decoration:no
 .btn{display:inline-block;background:var(--dark);color:#fff;padding:14px 24px;border-radius:25px;text-decoration:none;margin-top:12px}
 .categories,.products,.benefits,.banners{padding:45px 5%}.categories{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;background:white}
 .cat{padding:25px 10px;text-align:center;border-radius:15px;background:#fbefea}.cat span{display:block;font-size:34px;margin-bottom:8px}
-h2{font:34px Georgia,serif}.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}.card{background:white;padding:12px;border-radius:12px;position:relative}.pic{height:190px;background:#f5e9e3;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:52px}.card h3{font-size:14px;margin:10px 0 4px}.price{font-weight:bold}.add{width:100%;border:0;background:#e6b8b1;padding:11px;border-radius:8px;margin-top:10px;cursor:pointer}
+h2{font:34px Georgia,serif}.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}.card{background:white;padding:12px;border-radius:12px;position:relative}.pic{height:190px;background:#f5e9e3;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:52px;overflow:hidden}.pic img{width:100%;height:100%;object-fit:cover;border-radius:10px}.card h3{font-size:14px;margin:10px 0 4px}.price{font-weight:bold}.add{width:100%;border:0;background:#e6b8b1;padding:11px;border-radius:8px;margin-top:10px;cursor:pointer}
 .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;background:white;text-align:center}.benefits div{padding:18px}.banners{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.banner{padding:35px;background:#ead0c9;border-radius:12px;min-height:150px}.banner h3{font:25px Georgia,serif}
 footer{background:#191514;color:white;padding:45px 7%;display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px}footer h3{font-family:Georgia,serif}.cart{position:fixed;right:20px;bottom:20px;background:#191514;color:white;border-radius:50px;padding:14px 20px;box-shadow:0 4px 15px #0003}
 @media(max-width:900px){header{flex-wrap:wrap}.logo{order:-1;width:100%;text-align:center}.grid{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(3,1fr)}.benefits{grid-template-columns:repeat(2,1fr)}.banners{grid-template-columns:1fr}.hero h1{font-size:40px}footer{grid-template-columns:1fr}}
@@ -35,7 +35,7 @@ footer{background:#191514;color:white;padding:45px 7%;display:grid;grid-template
 <div class="cat"><span>💄</span>Lèvres</div><div class="cat"><span>👁️</span>Yeux</div><div class="cat"><span>✨</span>Teint</div><div class="cat"><span>🌸</span>Blush</div><div class="cat"><span>🖌️</span>Pinceaux</div><div class="cat"><span>🧴</span>Soins</div>
 </section>
 <section class="products" id="best"><h2>Nos meilleures ventes ♡</h2><div class="grid" id="grid"></div></section>
-<section class="benefits"><div>🚚ivraison rapide</b><br>Partout au Maroc</div><div>🛡️<b> Paiement à la livraison</b><br>Sûr et pratique</div><div>🎁<b> Emballage soigné</b><br>Avec amour ♡</div><div>🎧<b> Service client</b><br>À votre écoute</div></section>
+<section class="benefits"><div>🚚<b> Livraison rapide</b><br>Partout au Maroc</div><div>🛡️<b> Paiement à la livraison</b><br>Sûr et pratique</div><div>🎁<b> Emballage soigné</b><br>Avec amour ♡</div><div>🎧<b> Service client</b><br>À votre écoute</div></section>
 <section class="banners" id="promos"><div class="banner"><h3>Accessoires & pinceaux</h3><p>Les essentiels pour un maquillage parfait.</p></div><div class="banner"><h3>Promotions jusqu'à -50%</h3><p>Sur une sélection de produits.</p></div><div class="banner"><h3>Livraison partout au Maroc</h3><p>Rapide · Sécurisée · Suivie</p></div></section>
 <footer id="contact"><div><h3>☾ LUNE BEAUTY</h3><p>La beauté à portée de main ♡</p></div><div><h3>Liens utiles</h3><p>Accueil<br>Nouveautés<br>Maquillage<br>Best-sellers<br>Promotions</p></div><div><h3>Contact</h3><p>WhatsApp<br>Instagram · TikTok<br>Service client</p></div></footer>
 <div class="cart">🛒 Panier (<span id="count">0</span>)</div>
@@ -43,7 +43,7 @@ footer{background:#191514;color:white;padding:45px 7%;display:grid;grid-template
 
 const products = [
 
-["Bella Rose Lip Gloss", "99 DH", "💄"], 
+["Bella Rose Lip Gloss", "99 DH", "lip-gloss.png"], 
 ["Maybelline SuperStay Matte Ink", "149 DH", "💄"],
 
   ["Fenty Beauty Pro Filt'r", "299 DH", "🧴"],
@@ -62,7 +62,7 @@ function render(list = products) {
 
     <div class="card">
 
-   <div class="pic">${p[2].includes(".") ? `<img src="${p[2]}" alt="${p[0]}" onerror="this.style.display='none';this.parentElement.insertAdjacentText('beforeend','💄')">` : p[2]}</div>
+   <div class="pic"><img src="${p[2]}" alt="${p[0]}"></div>
 
       <h3>${p[0]}</h3>
 

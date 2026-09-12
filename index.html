@@ -38,7 +38,7 @@ footer{background:#191514;color:white;padding:45px 7%;display:grid;grid-template
 <section class="benefits"><div>🚚<b> Livraison rapide</b><br>Partout au Maroc</div><div>🛡️<b> Paiement à la livraison</b><br>Sûr et pratique</div><div>🎁<b> Emballage soigné</b><br>Avec amour ♡</div><div>🎧<b> Service client</b><br>À votre écoute</div></section>
 <section class="banners" id="promos"><div class="banner"><h3>Accessoires & pinceaux</h3><p>Les essentiels pour un maquillage parfait.</p></div><div class="banner"><h3>Promotions jusqu'à -50%</h3><p>Sur une sélection de produits.</p></div><div class="banner"><h3>Livraison partout au Maroc</h3><p>Rapide · Sécurisée · Suivie</p></div></section>
 <footer id="contact"><div><h3>☾ LUNE BEAUTY</h3><p>La beauté à portée de main ♡</p></div><div><h3>Liens utiles</h3><p>Accueil<br>Nouveautés<br>Maquillage<br>Best-sellers<br>Promotions</p></div><div><h3>Contact</h3><p>WhatsApp<br>Instagram · TikTok<br>Service client</p></div></footer>
-<div class="cart" onclick="orderWhatsApp()" style="cursor:pointer">
+<div class="cart" onclick="openCart()" style="cursor:pointer">
 🛒 Commander sur WhatsApp (<span id="count">0</span>)
 </div>
 <div class="modal" id="cartModal">
@@ -55,33 +55,9 @@ footer{background:#191514;color:white;padding:45px 7%;display:grid;grid-template
     </form>
   </div>
 </div>
-  function orderWhatsApp() {
-
-  if (count === 0) {
-
-    alert("Votre panier est vide.");
-
-    return;
-
-  }
-
-  const message =
-
-    "Bonjour Lune Beauty 🌸%0A" +
-
-    "Je souhaite commander " + count + " produit(s).%0A" +
-
-    "Merci de me contacter pour confirmer ma commande.";
-
-  window.open(
-
-    "https://wa.me/212618442000?text=" + message,
-
-    "_blank"
-
-  );
-
-}
+  
+HTML
+</div>
 <script>
 
 const products = [
